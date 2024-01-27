@@ -6,8 +6,6 @@ class Node:
 
 def inorder(root):
     if root:
-        print('root.item:- ',root.item)
-        print()
         # traverse left
         inorder(root.left)
         # traverse root
