@@ -22,58 +22,48 @@ def findMinNode(root):
             root=root.left
     return root
 
-# deletion
-def delete(root,item):
-    # base condition
+def findMaxNode(root):
     if root is None:
         return root
-    
-    # recursive calls for ancestors of 
-    # node to be deleted
-    if root.item>item:
-        root.left=delete(root.left,item)
+    while root.right is not None:
+        root=root.right
+    return root
+
+def deleteNode(root,item):
+    if root is None:
         return root
-    elif root.item<item:
-        root.right=delete(root.right,item)
-
-    # here root is the node to be deleted
-    
-    # if one of the children is empty
-    if root.left is None:
-        temp=root.right
-        del root
-        return temp
-    if root.right is None:
-        temp=root.left
-        del root
-        return temp
- 
-    #if both children exists
-    succParent=root
-     
-    # find successor
-    succ=root.right
-    while succ.left is not None:
-        succParent=succ
-        succ=succ.left
-
-    if succParent!=root:
-        succParent.left=succ.right
+    # traverse to target node
+    if item<root.item:
+        root.left=deleteNode(root.left,item)
+    elif item>root.item:
+        root.right=deleteNode(root.right,item)
     else:
-        succParent.right=succ.right
-
-    # delete successor and return root
-    del succ
+        if root.left is None:
+            temp=root.right
+            del root
+            return temp
+        elif root.right is None:
+            temp=root.left
+            del root
+            return temp
+        else:
+            temp=findMaxNode(root.left)
+            root.item=temp.item
+            root.left=deleteNode(root.left,temp.item)
+            # OR
+            # temp=findMinNode(root.right)
+            # root.item=temp.item
+            # root.right=deleteNode(root.right,temp.item)
+            
     return root
 
 def search(root,item):
-    if root==None or root.item==item:
+    if root is None or root.item==item:
         return root
-
-    if root.item<item:
+    if item<root.item:
+        return search(root.left,item)
+    else:
         return search(root.right,item)
-
-    return search(root.left,item)
 
 # traversal
 def inorder(root):
@@ -102,6 +92,11 @@ root=insert(root,20)
 root=insert(root,40)
 root=insert(root,60)
 root=insert(root,80)
+
+root=insert(root,10)
+root=insert(root,25)
+root=insert(root,35)
+root=insert(root,45)
 # root=Node(100)
 # root=insert(root,12)
 # root=insert(root,45)
@@ -128,16 +123,16 @@ root=insert(root,80)
 print("\nINORDER:-")
 inorder(root)
 
-root=delete(root,20)
+root=deleteNode(root,50)
 
 print("\nafter removing 20,INORDER:-")
 inorder(root)
 
-print("\nPRE ORDER:-")
-preorder(root)
+# print("\nPRE ORDER:-")
+# preorder(root)
 
-print("\nPOST ORDER")
-postorder(root)
+# print("\nPOST ORDER")
+# postorder(root)
 
 # print("\n\n\nMin Node:")
 # print(findMinNode(root).item)
