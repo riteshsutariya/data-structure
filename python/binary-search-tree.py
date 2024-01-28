@@ -57,7 +57,11 @@ def deleteNode(root,item):
             
     return root
 
+count=0
+
 def search(root,item):
+    global count
+    count+=1
     if root is None or root.item==item:
         return root
     if item<root.item:
@@ -85,7 +89,7 @@ def postorder(root):
         print(str(root.item),"->",end="")
 
 root=None
-root=insert(root,50)
+root=insert(root,100)
 root=insert(root,30)
 root=insert(root,70)
 root=insert(root,20)
@@ -97,36 +101,39 @@ root=insert(root,10)
 root=insert(root,25)
 root=insert(root,35)
 root=insert(root,45)
-# root=Node(100)
-# root=insert(root,12)
-# root=insert(root,45)
-# root=insert(root,178)
-# root=insert(root,98)
-# root=insert(root,116)
-# root=insert(root,5)
+root=insert(root,50)
+root=insert(root,12)
+root=insert(root,45)
+root=insert(root,178)
+root=insert(root,98)
+root=insert(root,116)
+root=insert(root,5)
 
-# root=insert(root,45)
-# root=insert(root,95)
-# root=insert(root,167)
-# root=insert(root,84)
-# root=insert(root,120)
-# root=insert(root,95)
+root=insert(root,45)
+root=insert(root,95)
+root=insert(root,167)
+root=insert(root,84)
+root=insert(root,120)
+root=insert(root,195)
 
+root=insert(root,110)
+root=insert(root,190)
+root=insert(root,450)
 
-# root=insert(root,458)
-# root=insert(root,124)
-# root=insert(root,15)
-# root=insert(root,29)
-# root=insert(root,73)
-# root=insert(root,459)
+root=insert(root,458)
+root=insert(root,124)
+root=insert(root,15)
+root=insert(root,29)
+root=insert(root,73)
+root=insert(root,459)
 
 print("\nINORDER:-")
 inorder(root)
 
-root=deleteNode(root,50)
+# root=deleteNode(root,50)
 
-print("\nafter removing 20,INORDER:-")
-inorder(root)
+# print("\nafter removing 20,INORDER:-")
+# inorder(root)
 
 # print("\nPRE ORDER:-")
 # preorder(root)
@@ -145,3 +152,5 @@ if result is not None:
     print("item found")
 else:
     print("not found!")
+
+print(f"total {count} iteration for search")
