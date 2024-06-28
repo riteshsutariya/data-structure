@@ -63,6 +63,69 @@ def insert(root, value):
         
     return root
 
+def delete_deepest(root, target_node):
+    q = []
+    q.append(root)
+    
+    temp = None
+    
+    while(len(q)):
+        temp = q.pop()
+        if temp == target_node:
+            temp = None
+            del target_node
+            return
+        if temp.left is not None:
+            if temp.left == target_node:
+                temp.left = None
+                del target_node
+                return
+            else:
+                q.append(temp.left)
+        
+        if temp.right is not None:
+            if temp.right == target_node:
+                temp.right = None
+                del target_node
+                return
+            else:
+                q.append(temp.right)
+                    
+
+def delete(root, target):
+    if root is None:
+        return root
+    
+    if root.left is None and root.right is None:
+        if root.value == target:
+            return None
+        else:
+            return root
+    
+    q = deque()
+    q.append(root)
+    temp = None
+    target_node = None
+    
+    while q:
+        temp = q.popleft()
+        if temp.value == target:
+            target_node = temp
+        
+        if temp.left is not None:
+            q.append(temp.left)
+        
+        if temp.right is not None:
+            q.append(temp.right)                
+    
+    if target_node is not None:
+        print('target found')
+        target_node.value = temp.value
+        delete_deepest(root, temp)
+    else:
+        print('target not found')
+        
+        
 # root = Node(10)
 # root.left = Node(12)
 # root.left.left = Node(20)
@@ -83,12 +146,20 @@ nodes = [2,4,6,12,18,24,38,54,38,40,90,45,94,99,120]
 for node in nodes:
     root = insert(root,node)
 
-print('in order:')
-inorder(root)
-print()
+# print('in order:')
+# inorder(root)
+# print()
+# print('pre order:')
+# preorder(root)
+# print()
+# print('post order')
+# postorder(root)
+# print()
+
 print('pre order:')
 preorder(root)
 print()
-print('post order')
-postorder(root)
+delete(root, 2)
+print('pre order:')
+preorder(root)
 print()

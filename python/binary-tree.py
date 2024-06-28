@@ -112,14 +112,46 @@ def delete(root, value):
     if target_node is not None:
         target_node.item = temp.item
         delete_deepest(root, temp)
-        print('targer found')
+        # print('targer found')
     else:
         print('target not found!')
     return root
+
+def search(root, target):
+    if root is None:
+        return None
+    
+    if root.left is None and root.right is None:
+        if root.item == target:
+            return root
+        else:
+            return None
+    
+    q = []
+    q.append(root)
+    
+    while q:
+        temp = q.pop()
+        if temp.item == target:
+            return temp
+        
+        if temp.left is not None:
+            if temp.left.item == target:
+                return temp.left
+            else:
+                q.append(temp.left)
+
+        if temp.right is not None:
+            if temp.right.item == target:
+                return temp.right
+            else:
+                q.append(temp.right)
+
+    return None
+
 root = None
 
-# values = [25,50,75,15,20,29,35,45,95,28,82,92,88,91,97]
-values = [25,50,75]
+values = [25,50,75,15,20,29,35,45,95,28,82,92,88,91,97]
 
 for value in values:
     root = insert(root,value)
@@ -134,11 +166,25 @@ print("Inorder traversal ")
 inorder(root)
 print()
 
+
+result = search(root, 25)
+if result is not None:
+    print('node found')
+else:
+    print('node not found!')
+    
+root = delete(root,25)
+    
+result = search(root, 25)
+if result is not None:
+    print('node found')
+else:
+    print('node not found!')
+
 # print("\nPreorder traversal ")
 # preorder(root)
+# print()
 
 # print("\nPostorder traversal ")
 # postorder(root)
-
 # print()
-
